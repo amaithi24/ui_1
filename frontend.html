@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  <script src="loading.js"></script>
+</head>
+<style>
+.buttonCtrl{
+padding:10px;
+}</style>
+<body>
+
+<div ng-app="myApp" ng-controller="myCtrl">
+<center>
+<div class="buttonCtrl">
+  <button type="button" class="btn btn-primary" ng-click="tempChange('Comfy')">Comfy</button>  
+  <button type="button" class="btn btn-primary"  ng-click="tempChange('Hot')">Hot</button>
+  <button type="button" class="btn btn-primary"  ng-click="tempChange('Cold')">Cold</button>
+</div>
+<div ng-if="loader">Loading</div>
+<div>
+  {{request}}
+</div>
+
+</center>
+
+
+</div>
+
+<script>
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope,$http) {
+$scope.loader=false;
+$scope.tempChange =function(button){
+$scope.loader=true;
+$http.get("https://jeyarajaf.azurewebsites.net/")
+  .then(function(response) {
+    $scope.loader=false;
+    $scope.request="Request Sent";
+    $scope.myWelcome = response.data;
+  });
+
+
+});
+</script>
+
+</body>
+</html>
